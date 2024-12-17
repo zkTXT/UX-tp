@@ -25,8 +25,8 @@ def create_db():
     conn.commit()
     conn.close()
 
-def generate_random_image_url(width, height):
-    return f"https://picsum.photos/{width}/{height}"
+def generate_random_image_url(width, height,id):
+    return f"https://picsum.photos/{width}/{height}?random={id}"
 
 def faker_products():
     conn = sqlite3.connect(DB_NAME)
@@ -36,7 +36,8 @@ def faker_products():
         name = fake.word()
         description = fake.sentence()
         price = round(random.uniform(10, 200), 2)
-        image_url = generate_random_image_url(300, 300)
+        rdm_image = random.randint(3, 10000)
+        image_url = generate_random_image_url(300, 300,rdm_image)
 
         cursor.execute('''
             INSERT INTO products (name, description, price, image_url)
